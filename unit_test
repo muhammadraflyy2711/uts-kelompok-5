@@ -1,0 +1,68 @@
+import unittest
+from uts_klmpk import Inventory, Makanan, Minuman, RumahTangga, LoggerMixin
+
+class TestMakanan(unittest.TestCase, LoggerMixin):
+
+    def setUp(self):
+        self.item = Makanan("Roti", 10000, 10, 5000, "Makanan")
+
+    def test_stok_berkurang(self):
+        self.item.kurangi_stok(2)
+        self.assertEqual(self.item.get_stok(), 8)
+    
+    def test_set_harga(self):
+        self.item.set_harga(12000)
+        self.assertEqual(self.item.get_harga(), 12000)
+
+class TestMinuman(unittest.TestCase):
+
+    def setUp(self):
+        self.item = Minuman("Air Mineral", 5000, 20, 2000, "Minuman")
+
+    def test_stok_tambah(self):
+        self.item.tambah_stok(5)
+        self.assertEqual(self.item.get_stok(), 25)
+
+    def test_set_harga(self):
+        self.item.set_harga(6000)
+        self.assertEqual(self.item.get_harga(), 6000)
+
+class TestRumahTangga(unittest.TestCase):
+
+    def setUp(self):
+        self.item = RumahTangga("Sapu", 15000, 15, 8000, "Rumah Tangga")
+
+    def test_stok_berkurang(self):
+        self.item.kurangi_stok(3)
+        self.assertEqual(self.item.get_stok(), 12)
+
+    def test_set_harga(self):
+        self.item.set_harga(18000)
+        self.assertEqual(self.item.get_harga(), 18000)
+
+    def test_tambah_stok(self):
+        self.item.tambah_stok(4)
+        self.assertEqual(self.item.get_stok(), 19)
+
+class TestInventory(unittest.TestCase):
+
+    def setUp(self):
+        self.inventory = Inventory()
+        self.makanan = Makanan("Roti", 10000, 10, 5000, "Makanan")
+        self.minuman = Minuman("Air Mineral", 5000, 20, 2000, "Minuman")
+        self.rumah_tangga = RumahTangga("Sapu", 15000, 15, 8000, "Rumah Tangga")
+
+    def test_tambah_barang(self):
+        self.inventory.tambah_barang(self.makanan)
+        self.inventory.tambah_barang(self.minuman)
+        self.inventory.tambah_barang(self.rumah_tangga)
+        self.assertEqual(len(self.inventory._Inventory__barang), 3)
+
+class loggermixintest(unittest.TestCase, LoggerMixin):
+
+    def test_log(self):
+        self.log("Test log message")
+        self.assertTrue(True)
+
+if __name__ == "__main__":
+    unittest.main()
